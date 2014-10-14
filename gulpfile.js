@@ -31,7 +31,7 @@ var dest = {
 
 gulp.task('scripts', function() {
     var dev = process.env.DEV || false;
-
+    console.log(dev);
     if (dev) {
         return gulp.src(paths.scripts)
             .pipe(sourcemaps.init())

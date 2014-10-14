@@ -22,7 +22,40 @@
 
 
     function addMesh(drawable) {
-        // body...
+        var geometry;
+        if (drawable.geometry == 'sphere') {
+            geometry = new THREE.SphereGeometry(20);
+        } else {
+            geometry = new THREE.BoxGeometry(40, 40, 40);
+        }
+
+        var color = new THREE.Color('#' + drawable.color);
+        var object = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({
+            color: color
+        }));
+        object.name = drawable.name;
+        object.material.ambient = object.material.color;
+
+        object.position.x = drawable.position.x;
+        object.position.y = drawable.position.y;
+        object.position.z = drawable.position.z;
+
+        object.rotation.x = drawable.rotation.x;
+        object.rotation.y = drawable.rotation.y;
+        object.rotation.z = drawable.rotation.z;
+
+        object.scale.x = drawable.scale.x;
+        object.scale.y = drawable.scale.y;
+        object.scale.z = drawable.scale.z;
+
+        object.castShadow = true;
+        object.receiveShadow = true;
+
+        scene.add(object);
+        console.log(scene.add(object));
+
+        objects.push(object);
+        return object;
     }
 
     function addRandomizedMesh(drawableGeometry, objName) {
@@ -71,11 +104,8 @@
         // container = document.createElement('div');
         // document.body.appendChild(container);
 
-
         camera = new THREE.PerspectiveCamera(75, canvasWidth / canvasHeight, 1, 10000);
         camera.position.z = 1000;
-
-
 
         scene = new THREE.Scene();
 
@@ -136,9 +166,9 @@
         controls.dynamicDampingFactor = 0.3;
 
 
-        renderer.domElement.addEventListener('mousemove', onDocumentMouseMove, false);
-        renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
-        renderer.domElement.addEventListener('mouseup', onDocumentMouseUp, false);
+        renderer.domElement.addEventListener('mousemove', onCanvasMouseMove, false);
+        renderer.domElement.addEventListener('mousedown', onCanvasMouseDown, false);
+        renderer.domElement.addEventListener('mouseup', onCanvasMouseUp, false);
 
         // window.addEventListener('resize', onWindowResize, false);
 
@@ -153,7 +183,7 @@
 
     // };
 
-    function onDocumentMouseMove(event) {
+    function onCanvasMouseMove(event) {
 
         event.preventDefault();
         mouse.x = ((event.clientX - renderer.domElement.offsetLeft) / container.clientWidth) * 2 - 1;
@@ -195,7 +225,7 @@
         }
     };
 
-    function onDocumentMouseDown(event) {
+    function onCanvasMouseDown(event) {
         event.preventDefault();
         var vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
         projector.unprojectVector(vector, camera);
@@ -214,7 +244,7 @@
         }
     };
 
-    function onDocumentMouseUp(event) {
+    function onCanvasMouseUp(event) {
         event.preventDefault();
         controls.enabled = true;
         if (INTERSECTED) {
@@ -294,7 +324,8 @@
         // Remove the item, destroy the model.
         clear: function() {
             if (confirm("Are you sure you want to delete this object?")) {
-                scene.remove(scene.getObjectByName(this.model.get('name')));
+                console.log(scene.getObjectById(this.model.get('id')));
+                scene.remove(scene.getObjectById(this.model.get('id')));
                 this.model.destroy();
             } else {
                 return;
@@ -337,7 +368,8 @@
             var view = new DrawableView({
                 model: drawable
             });
-
+            // console.log();
+            addMesh(drawable.attributes);
             this.$("#drawables-table").append(view.render().el);
 
 
@@ -352,7 +384,6 @@
                 name: this.drawableName.val()
             });
             this.drawableName.val('');
-            console.log(Drawables);
         },
         createRandomItem: function() {
 
@@ -361,13 +392,30 @@
                 return;
             }
 
-
-            addRandomizedMesh(this.drawableGeometry.val(), this.drawableName.val());
+            var newMesh = addRandomizedMesh(this.drawableGeometry.val(), this.drawableName.val());
             Drawables.create({
-                name: this.drawableName.val()
+                geometry: this.drawableGeometry.val(),
+                id: newMesh.id,
+                uuid: newMesh.uuid,
+                name: newMesh.name,
+                color: newMesh.material.color.getHexString(),
+                position: {
+                    x: newMesh.position.x,
+                    y: newMesh.position.y,
+                    z: newMesh.position.z,
+                },
+                rotation: {
+                    x: newMesh.rotation.x,
+                    y: newMesh.rotation.y,
+                    z: newMesh.rotation.z,
+                },
+                scale: {
+                    x: newMesh.scale.x,
+                    y: newMesh.scale.y,
+                    z: newMesh.scale.z,
+                }
             });
             this.drawableName.val('');
-            console.log(Drawables);
         }
     });
     var App = new AppView;
