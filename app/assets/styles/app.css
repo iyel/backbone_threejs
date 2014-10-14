@@ -1,0 +1,10 @@
+.navbar-brand {
+	padding: 0 15px;
+}
+
+#canvas {
+    width: 550px;
+    height: 400px;
+    padding: 0px;
+    position: static; /* fixed or static */
+}

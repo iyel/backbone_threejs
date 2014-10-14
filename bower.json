@@ -1,0 +1,23 @@
+{
+    "name": "mujin-challenge",
+    "version": "0.0.1",
+    "description": "MUJIN Frontend Programming Challenge",
+    "main": "index.html",
+    "keywords": [
+        "mujin"
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "marionette": "~2.2.1",
+        "bootstrap": "~3.2.0",
+        "three.js": "*"
+    }
+}

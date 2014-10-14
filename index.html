@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>MUJIN Frontend Programming Challenge</title>
+
+  <link rel="stylesheet" href="./app/bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="./app/assets/styles/app.css">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+    <body>
+     <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src="./app/assets/img/logo.jpg" height="50" alt=""></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav navbar-left">
+           <li><a href="#">Demo</a></li>
+         </ul>
+       </div><!-- /.navbar-collapse -->
+     </div><!-- /.container-fluid -->
+   </nav>
+
+   <div class="container-fluid" id="mujinapp">
+
+    <h1>MUJIN Frontend Programming Challenge</h1>
+    <p class="lead">Selected object: <span id="object-name"></span></p>
+
+    <div id="canvas"></div>
+    
+    <h3>Create new drawable</h3>
+    <form role="form">
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="form-group">
+            <label for="drawable-name" class="sr-only">Name</label>
+            <input type="text" class="form-control" id="drawable-name" placeholder="Enter name">
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <select class="form-control" id="drawable-geometry">
+            <option value="box">Box</option>
+            <option value="sphere">Sphere</option>
+          </select>
+        </div>
+        <div class="col-xs-2">
+          <button type="button" id="drawable-add-random" class="btn btn-default">Add Random</button>
+        </div>
+      </div>
+    </form>
+
+
+    <table class="table">
+      <thead>
+        <th>Name</th>
+        <th>Color</th>
+        <th>Size</th>
+        <th>Position</th>
+        <th>Rotation</th>
+        <th></th>
+      </thead>
+      <tbody id="drawables-table">
+        
+      </tbody>
+    </table>
+
+
+ </div>
+
+   <!-- Templates -->
+
+
+  <script type="text/template" id="drawable-template">
+      <td><%= name %></td>
+      <td><%= color %></td>
+      <td>
+        <label for="">x:</label> <input class="form-control" type="text" id="scale-x" value="<%- scale.x %>" />
+        <label for="">y:</label> <input class="form-control" type="text" id="scale-y" value="<%- scale.y %>" />
+        <label for="">z:</label> <input class="form-control" type="text" id="scale-z" value="<%- scale.z %>" />
+      </td>
+      <td>
+        <label for="">x:</label> <input class="form-control" type="text" id="position-x" value="<%- position.x %>" />
+        <label for="">y:</label> <input class="form-control" type="text" id="position-y" value="<%- position.y %>" />
+        <label for="">z:</label> <input class="form-control" type="text" id="position-z" value="<%- position.z %>" />
+      </td>
+      <td>
+        <label for="">x:</label> <input class="form-control" type="text" id="rotation-x" value="<%- rotation.x %>" />
+        <label for="">y:</label> <input class="form-control" type="text" id="rotation-y" value="<%- rotation.y %>" />
+        <label for="">z:</label> <input class="form-control" type="text" id="rotation-z" value="<%- rotation.z %>" />
+      </td>
+      <td>
+        <a href="#" class="btn btn-default destroy" >
+            <span class="glyphicon glyphicon-trash"></span> 
+          </a>
+      </td>
+  </script>
+
+ <script src="./app/bower_components/jquery/dist/jquery.js"></script>
+ <script src="./app/bower_components/underscore/underscore.js"></script>
+ <script src="./app/bower_components/backbone/backbone.js"></script>
+ <script src="./app/bower_components/backbone.localStorage/backbone.localStorage.js"></script>
+
+ <script src="./app/bower_components/three.js/three.js"></script>
+ <script src="./app/components/TrackballControls.js"></script>
+ <script src="./app/app.js"></script>
+
+</body>
+</html>
